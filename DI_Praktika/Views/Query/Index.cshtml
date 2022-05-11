@@ -1,0 +1,47 @@
+﻿@model DI_Praktika.Models.Query.QueryIndexVM
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+<div>
+    <a asp-action="Create">Create New</a>
+</div>
+
+<table id="table" class="table table-striped">
+    <thead>
+        <tr>
+            <th>Start</th>
+            <th>End</th>
+            <th>Car</th>
+            <th>Price</th>
+            <th>Status</th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model.Items)
+        {
+            if ((item.User == User.Identity.Name && User.IsInRole("Client")) || (User.IsInRole("Administrator")))
+            {
+        <tr>
+            <td>@Html.DisplayFor(m => item.Start)</td>
+            <td>@Html.DisplayFor(m => item.End)</td>
+            <td>@Html.DisplayFor(m => item.Car)</td>
+            <td>@Html.DisplayFor(m => item.Price)</td>
+            <td>@Html.DisplayFor(m => item.Status)</td>
+            @if (DateTime.Now < item.Start)
+            {
+                <td><a asp-action="Canceled" asp-route-id="@item.ID" class="btn btn-primary">Canceled</a></td>
+            }
+            <td><a asp-action="Edit" asp-route-id="@item.ID" class="btn btn-primary">Edit</a></td>
+            <td><a asp-action="Delete" asp-route-id="@item.ID" class="btn btn-danger">Delete</a></td>
+        </tr>
+            }
+        }
+    </tbody>
+</table>

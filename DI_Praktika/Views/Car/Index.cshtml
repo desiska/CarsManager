@@ -1,0 +1,52 @@
+﻿@model DI_Praktika.Models.Car.CarIndexVM
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+@if (User.IsInRole("Administrator"))
+{
+<div>
+    <a asp-action="Create">Create New</a>
+</div>
+}
+
+<table id="table" class="table table-striped">
+    <thead>
+        <tr>
+            <th>Brand</th>
+            <th>Model</th>
+            <th>Year</th>
+            <th>Passangers count</th>
+            <th>Description</th>
+            <th>Price for rent for a day</th>
+            <th></th>
+            @if (User.IsInRole("Administrator"))
+            {
+                <td></td>
+                <td></td>
+            }
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model.Items)
+        {
+            <tr>
+                <td>@Html.DisplayFor(m => item.Brand)</td>
+                <td>@Html.DisplayFor(m => item.Model)</td>
+                <td>@Html.DisplayFor(m => item.Year)</td>
+                <td>@Html.DisplayFor(m => item.PassangersCount)</td>
+                <td>@Html.DisplayFor(m => item.Description)</td>
+                <td>@Html.DisplayFor(m => item.PriceForRentForDay)</td>
+                <td><a asp-action="SeeACar" asp-route-id="@item.ID" class="btn btn-dark">See a car</a></td>
+                @if (User.IsInRole("Administrator"))
+                {
+                    <td><a asp-action="Edit" asp-route-id="@item.ID" class="btn btn-primary">Edit</a></td>
+                    <td><a asp-action="Delete" asp-route-id="@item.ID" class="btn btn-danger">Delete</a></td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>

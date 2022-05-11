@@ -1,0 +1,52 @@
+@model List<DI_Praktika.Models.UserViewModels.GetAllUsersViewModel>
+@{ ViewData["Title"] = "UserList"; }
+
+<div class="userPage">
+    <h1>All Users</h1>
+    <a asp-action="Create">Create new User</a>
+    <table id="table" class="table table-striped">
+        <thead>
+            <tr>
+                <th>Username</th>
+                <th>First name</th>
+                <th>Middle name</th>
+                <th>Last name</th>
+                <th>Email</th>
+                <th>User PIN</th>
+                <th>Phone number</th>
+                <th>Role</th>
+                <th> </th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in Model)
+            {
+                <tr>
+                    <td>@user.Username</td>
+                    <td>@user.FirstName</td>
+                    <td>@user.MiddleName</td>
+                    <td>@user.LastName</td>
+                    <td>@user.Email</td>
+                    <td>@user.PersonPIN</td>
+                    <td>@user.PhoneNumber</td>
+                    <td>@string.Join(",", user.Roles.ToList())</td>
+                    <td>
+                        <form asp-action="Edit" asp-route-id="@user.UserId" method="get">
+                            <button type="submit" class="btn btn-sm btn-primary">
+                                Edit
+                            </button>
+                        </form>
+                    <td>
+                        <form asp-action="Delete" asp-route-id="@user.UserId" method="post">
+                            <button type="submit" class="btn btn-sm btn-danger">
+                                Delete
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+}
+        </tbody>
+    </table>
+
+</div>
